@@ -14,6 +14,7 @@ public class Table {
     Team team;
     int playedGames;
     int won;
+    int draw;
     int lost;
     int points;
     int goalsFor;

@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+
 @Setter
 @Getter
 @NoArgsConstructor
@@ -12,6 +14,6 @@ import lombok.Setter;
 public class Standings {
     String stage;
     String type;
-    int group;
-    Table table;
+    String group;
+    ArrayList<Table> table;
 }

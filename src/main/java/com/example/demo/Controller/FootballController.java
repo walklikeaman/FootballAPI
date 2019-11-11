@@ -1,26 +1,31 @@
 package com.example.demo.Controller;
 
-import com.example.demo.Model.CompetitionsResponce;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
+import com.example.demo.DTO.TableDto;
+import com.example.demo.Service.FootballService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
+@RestController
 public class FootballController {
-    @GetMapping(path = "/competitions")
-    public CompetitionsResponce getCompetition() {
-        CompetitionsResponce competitionsResponce = new CompetitionsResponce();
-        RestTemplate restTemplate = new RestTemplate();
-        String url = "https://api.football-data.org/v2/competitions/";
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("X-Auth-Token", "9d3a8ddfead74213a836bd4444be9554");
-        RequestEntity<String> request = new RequestEntity<>(headers, HttpMethod.GET, builder.build().toUri());
-        ResponseEntity<CompetitionsResponce> response = restTemplate.exchange(request, CompetitionsResponce.class);
-        competitionsResponce = response.getBody();
-        return competitionsResponce;
+    @Autowired
+    FootballService footballService;
+
+    @GetMapping(path = "/standings/{country}{name}")
+    public List<TableDto> getCompetition(@PathVariable String country, @RequestParam String name){
+        return footballService.getCompetitionTable(country, name);
     }
+
+//    @GetMapping(path = "/competitions/{country}{name}")
+//    public int getCompetitionByCountry(@PathVariable String country, @RequestParam String name){
+//        return  footballService.getCompetitionByCountry(country, name);
+//    }
+
+
+
 }
+
